@@ -4,15 +4,39 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.persistence.ManyToOne;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.REFRESH;
+import javax.persistence.JoinColumn;
 
+@Entity
 @ManagedBean(name="course")
 @RequestScoped
 public class Course implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private int id;
+	
+	@NotNull
+	@Column(name="name")
 	private String name;
+	
+	@Min(value=1)
+	@Column(name="credits")
 	private int credits;
+	
+	@ManyToOne(cascade = { MERGE, REFRESH })
+	@JoinColumn(name = "teacher_id", referencedColumnName = "id")
 	private Teacher teacher;
 	
 	public int getId() {
