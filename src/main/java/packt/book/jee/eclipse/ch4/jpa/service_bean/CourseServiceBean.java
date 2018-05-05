@@ -32,7 +32,7 @@ public class CourseServiceBean {
 	}
 	
 	public String addCourse() {
-		System.out.println(course.getName());
+		//System.out.println(course.getName());
 		return "listCourse";
 	}
 }
